@@ -1,0 +1,30 @@
+#Ansible installed file
+{% if ansible_hostname == "load-balancer" %}
+upstream app {
+    server {{ hostvars['app-server']['ansible_default_ipv4']['address'] }}:80;
+}
+{% endif %}
+
+server {
+    listen {{ ansible_default_ipv4.address }}:80 default_server;
+    server_name {{ server_name }};
+    {% if ansible_hostname == "app-server" %}
+    {% if ansible_os_family == "Debian" %}
+    root /var/www/html;
+    {% elif ansible_os_family == "RedHat" %}
+    root /usr/share/nginx/html;
+    {% endif %}
+    index index.html, index.nginx-debian.html;
+    {% endif %}
+
+    location / {
+    {% if ansible_hostname == "app-server" %}
+        try_files $uri $uri/ =404;
+    {% elif ansible_hostname == "load-balancer" %}
+        proxy_pass http://app/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Real-IP $remote_addr;
+    {% endif %}
+    } 
+}

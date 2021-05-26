@@ -1,0 +1,10 @@
+---
+# tasks file for init_virtualhosts
+
+- include_tasks: init_with_ubuntu.yml
+  when:
+    ansible_os_family == "Debian"
+
+- include_tasks: init_with_centos.yml
+  when:
+    ansible_os_family == "RedHat"

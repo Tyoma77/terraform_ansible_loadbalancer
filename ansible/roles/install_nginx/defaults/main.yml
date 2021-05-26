@@ -1,0 +1,4 @@
+---
+# defaults file for install_nginx
+avail_path: /etc/nginx/sites-available
+enabl_path: /etc/nginx/sites-enabled

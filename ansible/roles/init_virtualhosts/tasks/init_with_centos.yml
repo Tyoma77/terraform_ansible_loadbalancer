@@ -1,0 +1,9 @@
+---
+- name: add template file
+  template:
+    src: "virtualhost.j2"
+    dest: "{{ host_path_centos }}/mainhost.conf"
+    force: true
+    mode: "755"
+  notify:
+    - reload nginx

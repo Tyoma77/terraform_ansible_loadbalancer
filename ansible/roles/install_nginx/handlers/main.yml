@@ -1,0 +1,13 @@
+---
+# handlers file for install_nginx
+
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded
+
+- name: start and enable nginx
+  service:
+    name: nginx
+    enabled: true
+    state: started

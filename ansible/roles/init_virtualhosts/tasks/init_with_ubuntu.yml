@@ -1,0 +1,17 @@
+---
+- name: add template file
+  template:
+    src: "virtualhost.j2"
+    dest: "{{ avail_path }}/mainhost"
+    force: true
+    mode: "755"
+  notify:
+    - reload nginx
+
+- name: enable virtualhost
+  file:
+    src: "{{ avail_path }}/mainhost"
+    dest: "{{ enabl_path }}/mainhost"
+    state: link
+  notify:
+    - reload nginx

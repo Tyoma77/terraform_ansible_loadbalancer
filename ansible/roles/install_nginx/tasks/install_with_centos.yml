@@ -1,0 +1,7 @@
+---
+- name: install nginx and ensure package cache is up to date when CENTOS
+  yum:
+    name: nginx=1.14.*
+    update_cache: true
+  notify:
+    - start and enable nginx

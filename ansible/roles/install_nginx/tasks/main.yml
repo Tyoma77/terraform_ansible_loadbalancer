@@ -1,0 +1,10 @@
+---
+# tasks file for install_nginx
+
+- include_tasks: install_with_ubuntu.yml
+  when:
+    ansible_os_family == "Debian"
+
+- include_tasks: install_with_centos.yml
+  when:
+    ansible_os_family == "RedHat"

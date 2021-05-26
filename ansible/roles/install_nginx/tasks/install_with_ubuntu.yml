@@ -1,0 +1,18 @@
+---
+- name: install nginx and ensure package cache is up to date when UBUNTU
+  apt:
+    name: nginx=1.18.*
+    update_cache: true
+    cache_valid_time: 3600
+  notify:
+    - start and enable nginx
+
+- name: delete default virtualhost
+  file:
+    state: absent
+    path: "{{ item }}/default"
+  with_items:
+    - "{{ avail_path }}"
+    - "{{ enabl_path }}"
+  notify:
+    - reload nginx
